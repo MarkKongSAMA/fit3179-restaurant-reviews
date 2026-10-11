@@ -14,7 +14,7 @@ python -m http.server 8765
 
 Open `http://localhost:8765`. Directly opening `index.html` as a file can block data requests.
 
-The published address, once GitHub Pages is enabled, is https://markkongsama.github.io/fit3179-restaurant-reviews/ .
+Published website: https://markkongsama.github.io/fit3179-restaurant-reviews/ . GitHub Pages was enabled from `main` / repository root and the public website was verified on 11 October 2026.
 
 ## Structure
 
