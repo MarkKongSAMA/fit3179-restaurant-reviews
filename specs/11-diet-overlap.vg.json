@@ -1,0 +1,294 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "width": 330,
+  "height": 320,
+  "padding": 0,
+  "autosize": "none",
+  "background": "transparent",
+  "config": {
+    "font": "Arial",
+    "text": {
+      "font": "Arial",
+      "fontSize": 12,
+      "fill": "#183b35"
+    }
+  },
+  "description": "Three-set Venn diagram of the explicit Vegetarian friendly, Vegan options and Gluten free options listing labels. Circle areas are schematic and NOT proportional. The seven displayed values are exact mutually exclusive intersections, including zero cells. Listings with none of these recorded labels are reported outside the circles as unrecorded, not as unavailable.",
+  "signals": [
+    {
+      "name": "unit",
+      "update": "min(width, height - 35)"
+    },
+    {
+      "name": "left",
+      "update": "(width - unit) / 2"
+    },
+    {
+      "name": "top",
+      "value": 6
+    }
+  ],
+  "data": [
+    {
+      "name": "raw",
+      "url": "data/processed/reviews.json",
+      "format": {
+        "type": "json"
+      },
+      "transform": [
+        {
+          "type": "formula",
+          "as": "mask",
+          "expr": "(datum.vegetarian_listed ? 4 : 0) + (datum.vegan_listed ? 2 : 0) + (datum.gluten_free_listed ? 1 : 0)"
+        }
+      ]
+    },
+    {
+      "name": "intersections",
+      "source": "raw",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": [
+            "mask"
+          ],
+          "fields": [
+            null,
+            "name"
+          ],
+          "ops": [
+            "count",
+            "values"
+          ],
+          "as": [
+            "count",
+            "members"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "circles",
+      "values": [
+        {
+          "set": "Vegetarian",
+          "x": 0.36,
+          "y": 0.38,
+          "fill": "#28746b"
+        },
+        {
+          "set": "Vegan",
+          "x": 0.64,
+          "y": 0.38,
+          "fill": "#d5a245"
+        },
+        {
+          "set": "Gluten free",
+          "x": 0.5,
+          "y": 0.62,
+          "fill": "#a65a3c"
+        }
+      ]
+    },
+    {
+      "name": "regions",
+      "values": [
+        {
+          "mask": 4,
+          "label": "Vegetarian only",
+          "x": 0.23,
+          "y": 0.34
+        },
+        {
+          "mask": 2,
+          "label": "Vegan only",
+          "x": 0.77,
+          "y": 0.34
+        },
+        {
+          "mask": 1,
+          "label": "Gluten free only",
+          "x": 0.5,
+          "y": 0.79
+        },
+        {
+          "mask": 6,
+          "label": "Vegetarian + vegan only",
+          "x": 0.5,
+          "y": 0.235
+        },
+        {
+          "mask": 5,
+          "label": "Vegetarian + gluten free only",
+          "x": 0.34,
+          "y": 0.595
+        },
+        {
+          "mask": 3,
+          "label": "Vegan + gluten free only",
+          "x": 0.66,
+          "y": 0.595
+        },
+        {
+          "mask": 7,
+          "label": "All three listed labels",
+          "x": 0.5,
+          "y": 0.46
+        },
+        {
+          "mask": 0,
+          "label": "None of the three labels recorded",
+          "x": 0.5,
+          "y": 1.035
+        }
+      ],
+      "transform": [
+        {
+          "type": "lookup",
+          "from": "intersections",
+          "key": "mask",
+          "fields": [
+            "mask"
+          ],
+          "values": [
+            "count",
+            "members"
+          ],
+          "as": [
+            "count",
+            "members"
+          ]
+        },
+        {
+          "type": "formula",
+          "as": "count",
+          "expr": "isValid(datum.count) ? datum.count : 0"
+        }
+      ]
+    },
+    {
+      "name": "labels",
+      "values": [
+        {
+          "label": "Vegetarian",
+          "x": 0.2,
+          "y": 0.025
+        },
+        {
+          "label": "Vegan",
+          "x": 0.8,
+          "y": 0.025
+        },
+        {
+          "label": "Gluten free",
+          "x": 0.5,
+          "y": 0.965
+        }
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "type": "arc",
+      "from": {
+        "data": "circles"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "left + unit * datum.x"
+          },
+          "y": {
+            "signal": "top + unit * datum.y"
+          },
+          "innerRadius": {
+            "value": 0
+          },
+          "outerRadius": {
+            "signal": "unit * 0.30"
+          },
+          "startAngle": {
+            "value": 0
+          },
+          "endAngle": {
+            "signal": "2 * PI"
+          },
+          "fill": {
+            "field": "fill"
+          },
+          "fillOpacity": {
+            "value": 0.13
+          },
+          "stroke": {
+            "field": "fill"
+          },
+          "strokeWidth": {
+            "value": 1.5
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "labels"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "left + unit * datum.x"
+          },
+          "y": {
+            "signal": "top + unit * datum.y"
+          },
+          "text": {
+            "field": "label"
+          },
+          "align": {
+            "value": "center"
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "fontSize": {
+            "value": 12
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "regions"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "left + unit * datum.x"
+          },
+          "y": {
+            "signal": "top + unit * datum.y"
+          },
+          "text": {
+            "signal": "datum.mask === 0 ? 'Unrecorded: ' + datum.count : datum.count"
+          },
+          "align": {
+            "value": "center"
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "fontSize": {
+            "signal": "datum.mask === 0 ? 12 : 18"
+          },
+          "fontWeight": {
+            "signal": "datum.mask === 0 ? 'normal' : 'bold'"
+          },
+          "tooltip": {
+            "signal": "{'Exact combination': datum.label, 'Restaurants': datum.count, 'Listings': datum.members ? join(pluck(datum.members, 'name'), ', ') : 'No sampled listing'}"
+          }
+        }
+      }
+    }
+  ]
+}

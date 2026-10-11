@@ -1,0 +1,261 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Bin map: 2024 CLUE establishment locations counted in full 500 m by 500 m UTM zone 55S squares. Each cell is 0.25 km² before display projection. Only occupied cells are supplied. Cells remain full squares at the municipal boundary. Not filtered by review controls.",
+  "width": "container",
+  "height": 330,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+  "background": "transparent",
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": "normal",
+      "labelColor": "#183b35",
+      "titleColor": "#183b35",
+      "domainColor": "#bdc9c2",
+      "tickColor": "#bdc9c2",
+      "gridColor": "#e6ebe5",
+      "labelPadding": 6,
+      "titlePadding": 10
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleColor": "#183b35",
+      "labelColor": "#183b35",
+      "symbolStrokeWidth": 1,
+      "padding": 4
+    },
+    "title": {
+      "fontSize": 13,
+      "color": "#183b35",
+      "anchor": "start",
+      "fontWeight": "normal"
+    }
+  },
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [
+      -36,
+      -38
+    ],
+    "rotate": [
+      -145,
+      0,
+      0
+    ]
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/processed/areas.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#edf0e8",
+        "stroke": "#ffffff",
+        "strokeWidth": 0.8
+      }
+    },
+    {
+      "data": {
+        "url": "data/processed/grids.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "transform": [
+        {
+          "calculate": "datum.properties.count < 5 ? '1–4' : datum.properties.count < 15 ? '5–14' : datum.properties.count < 40 ? '15–39' : datum.properties.count < 80 ? '40–79' : '80+'",
+          "as": "count_class"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#fffdf7",
+        "strokeWidth": 0.35
+      },
+      "encoding": {
+        "color": {
+          "field": "count_class",
+          "type": "ordinal",
+          "title": "Venues / cell",
+          "scale": {
+            "domain": [
+              "1–4",
+              "5–14",
+              "15–39",
+              "40–79",
+              "80+"
+            ],
+            "range": [
+              "#f6e6c7",
+              "#e7bc82",
+              "#d39356",
+              "#b36636",
+              "#814221"
+            ]
+          },
+          "legend": {
+            "type": "symbol",
+            "orient": "bottom",
+            "direction": "horizontal",
+            "columns": 2,
+            "symbolType": "square",
+            "symbolSize": 100,
+            "columnPadding": 18,
+            "rowPadding": 4
+          }
+        },
+        "tooltip": [
+          {
+            "field": "properties.count",
+            "type": "quantitative",
+            "title": "2024 establishments",
+            "format": ",.0f"
+          },
+          {
+            "field": "properties.cell_width_m",
+            "type": "quantitative",
+            "title": "Cell side (m)",
+            "format": ".0f"
+          },
+          {
+            "field": "properties.area_km2",
+            "type": "quantitative",
+            "title": "Cell area (km²)",
+            "format": ".2f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/processed/areas.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "transform": [
+        {
+          "filter": {
+            "field": "properties.area",
+            "oneOf": [
+              "Melbourne (CBD)",
+              "Carlton",
+              "Docklands"
+            ]
+          }
+        },
+        {
+          "calculate": "geoCentroid(null, datum)",
+          "as": "label_centroid"
+        },
+        {
+          "calculate": "datum.label_centroid[0]",
+          "as": "label_lon"
+        },
+        {
+          "calculate": "datum.label_centroid[1]",
+          "as": "label_lat"
+        },
+        {
+          "calculate": "datum.properties.area === 'Melbourne (CBD)' ? 'CBD' : datum.properties.area",
+          "as": "label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "fill": "#fffdf7",
+        "stroke": "#fffdf7",
+        "strokeWidth": 3,
+        "strokeOpacity": 0.85
+      },
+      "encoding": {
+        "longitude": {
+          "field": "label_lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "label_lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    },
+    {
+      "data": {
+        "url": "data/processed/areas.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "transform": [
+        {
+          "filter": {
+            "field": "properties.area",
+            "oneOf": [
+              "Melbourne (CBD)",
+              "Carlton",
+              "Docklands"
+            ]
+          }
+        },
+        {
+          "calculate": "geoCentroid(null, datum)",
+          "as": "label_centroid"
+        },
+        {
+          "calculate": "datum.label_centroid[0]",
+          "as": "label_lon"
+        },
+        {
+          "calculate": "datum.label_centroid[1]",
+          "as": "label_lat"
+        },
+        {
+          "calculate": "datum.properties.area === 'Melbourne (CBD)' ? 'CBD' : datum.properties.area",
+          "as": "label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "fill": "#183b35"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "label_lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "label_lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    }
+  ]
+}

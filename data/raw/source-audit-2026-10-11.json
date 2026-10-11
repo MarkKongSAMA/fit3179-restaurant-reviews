@@ -1,0 +1,516 @@
+{
+  "audit_date": "2026-10-11",
+  "queries": [
+    {
+      "url": "https://data.melbourne.vic.gov.au/api/explore/v2.1/catalog/datasets/cafes-and-restaurants-with-seating-capacity/records?select=max%28census_year%29&limit=1",
+      "success": true,
+      "payload": {
+        "total_count": 66356,
+        "results": [
+          {
+            "max(census_year)": "2024-01-01T00:00:00+00:00"
+          }
+        ]
+      }
+    },
+    {
+      "url": "https://data.melbourne.vic.gov.au/api/explore/v2.1/catalog/datasets/cafes-and-restaurants-with-seating-capacity",
+      "success": true,
+      "payload": {
+        "visibility": "domain",
+        "fields": [
+          {
+            "name": "census_year",
+            "description": "The CLUE census year refers to the year in which surveying was completed.",
+            "annotations": {
+              "facet": true,
+              "timeserie_precision": "year",
+              "facetsort": "-alphanum",
+              "timerangeFilter": true
+            },
+            "label": "Census year",
+            "type": "date"
+          },
+          {
+            "name": "block_id",
+            "description": "The Census area is divided into city blocks, each of which is identified by a unique block number. Blocks are primarily defined by major roads. There are around 606 blocks in the City of Melbourne.",
+            "annotations": {
+              "facet": true,
+              "facetsort": "num",
+              "disjunctive": true
+            },
+            "label": "Block ID",
+            "type": "int"
+          },
+          {
+            "name": "property_id",
+            "description": "Property ID is the optional second tier in the property hierarchy, is an individual key use to identify when multiple buildings are located within the boundary of a Base Property ID.",
+            "annotations": {
+              "facetsort": "-count"
+            },
+            "label": "Property ID",
+            "type": "text"
+          },
+          {
+            "name": "base_property_id",
+            "description": "Base Property ID is an individual key use to identify each land parcel which is a space (not a street or road) capable of being the parent property of either a Building Property or an occupancy property, the base is the first tier in the property hierarchy.",
+            "annotations": {
+              "facetsort": "-count"
+            },
+            "label": "Base property ID",
+            "type": "text"
+          },
+          {
+            "name": "building_address",
+            "description": "Street Address of the Property ID",
+            "annotations": {},
+            "label": "Building address",
+            "type": "text"
+          },
+          {
+            "name": "clue_small_area",
+            "description": "CLUE small areas are composed of a group of city blocks, each of which is identified by a unique block number.",
+            "annotations": {
+              "facet": true,
+              "disjunctive": true
+            },
+            "label": "CLUE small area",
+            "type": "text"
+          },
+          {
+            "name": "trading_name",
+            "description": "Trading name of the business establishment.",
+            "annotations": {},
+            "label": "Trading name",
+            "type": "text"
+          },
+          {
+            "name": "business_address",
+            "description": "Street Address of the business establishment.",
+            "annotations": {},
+            "label": "Business address",
+            "type": "text"
+          },
+          {
+            "name": "industry_anzsic4_code",
+            "description": "Each establishment in CLUE is classified by an ANZSIC 4 code, allocated to the predominant industry within which it operates using the Australian New Zealand Standard Industrial Classification (ANZSIC) developed by the ABS.",
+            "annotations": {
+              "facet": true,
+              "facetsort": "-count",
+              "disjunctive": true
+            },
+            "label": "Industry (ANZSIC4) code",
+            "type": "text"
+          },
+          {
+            "name": "industry_anzsic4_description",
+            "description": "Each establishment in CLUE is classified by an ANZSIC 4 description, allocated to the predominant industry within which it operates using the Australian New Zealand Standard Industrial Classification (ANZSIC) developed by the ABS.",
+            "annotations": {
+              "facet": true,
+              "disjunctive": true
+            },
+            "label": "Industry (ANZSIC4) description",
+            "type": "text"
+          },
+          {
+            "name": "seating_type",
+            "description": "A venue where indoor or outdoor seating is provided for commercial use.",
+            "annotations": {
+              "facet": true
+            },
+            "label": "Seating type",
+            "type": "text"
+          },
+          {
+            "name": "number_of_seats",
+            "description": "The total number of seats in the establishment by seating type.",
+            "annotations": {
+              "facet": true,
+              "disjunctive": true
+            },
+            "label": "Number of seats",
+            "type": "int"
+          },
+          {
+            "name": "longitude",
+            "description": "The longitude of the cafe or restaurant",
+            "annotations": {},
+            "label": "Longitude",
+            "type": "double"
+          },
+          {
+            "name": "latitude",
+            "description": "The latitude of the cafe or restaurant",
+            "annotations": {},
+            "label": "Latitude",
+            "type": "double"
+          },
+          {
+            "name": "location",
+            "description": "The longitude and latitude of the cafe or restaurant",
+            "annotations": {
+              "facetsort": "-count"
+            },
+            "label": "location",
+            "type": "geo_point_2d"
+          }
+        ],
+        "dataset_id": "cafes-and-restaurants-with-seating-capacity",
+        "dataset_uid": "da_pmvp5c",
+        "has_records": true,
+        "features": [
+          "timeserie",
+          "analyze",
+          "geo"
+        ],
+        "attachments": [],
+        "alternative_exports": [],
+        "data_visible": true,
+        "metas": {
+          "default": {
+            "title": "Café, restaurant, bistro seats",
+            "description": "Data collected as part of the City of Melbourne's Census of Land Use and Employment (CLUE). The data covers the period 2002-2024. It show business establishments with their trading name, business address, industry (ANZSIC4) classification, number of dining seats (classified by indoor/outdoor), location and CLUE block and small area designation.<br>\n<br>\nFor more information about CLUE see <a href=\"http://www.melbourne.vic.gov.au/clue\" target=\"_blank\">http://www.melbourne.vic.gov.au/clue</a>",
+            "theme": [
+              "Business"
+            ],
+            "keyword": [
+              "beverage",
+              "business",
+              "cafe",
+              "census of land use and employment",
+              "cityreactivation",
+              "clue",
+              "food",
+              "industry",
+              "restaurant"
+            ],
+            "license": "CC BY",
+            "license_url": "https://creativecommons.org/licenses/by/4.0/legalcode",
+            "language": "en",
+            "metadata_languages": [
+              "en"
+            ],
+            "timezone": null,
+            "modified": "2021-11-02T00:00:00+00:00",
+            "modified_updates_on_metadata_change": false,
+            "modified_updates_on_data_change": false,
+            "data_processed": "2026-03-16T21:21:12+00:00",
+            "metadata_processed": "2026-09-03T13:02:08.779000+00:00",
+            "geographic_reference": null,
+            "geographic_reference_auto": false,
+            "territory": null,
+            "geometry_types": [
+              "Point"
+            ],
+            "bbox": {
+              "type": "Feature",
+              "geometry": {
+                "coordinates": [
+                  [
+                    [
+                      144.99056045897305,
+                      -37.776254480704665
+                    ],
+                    [
+                      144.90465139970183,
+                      -37.776254480704665
+                    ],
+                    [
+                      144.90465139970183,
+                      -37.849710336886346
+                    ],
+                    [
+                      144.99056045897305,
+                      -37.849710336886346
+                    ],
+                    [
+                      144.99056045897305,
+                      -37.776254480704665
+                    ]
+                  ]
+                ],
+                "type": "Polygon"
+              },
+              "properties": {}
+            },
+            "publisher": "data.melbourne.vic.gov.au",
+            "references": null,
+            "records_count": 66356,
+            "attributions": null,
+            "source_domain": null,
+            "source_domain_title": null,
+            "source_domain_address": null,
+            "source_dataset": null,
+            "shared_catalog": null,
+            "federated": false,
+            "parent_domain": "mav-technology-geelongvic",
+            "update_frequency": null
+          },
+          "custom": {
+            "dataset-owner": "City of Melbourne Open Data Team",
+            "data-provided-by": "City of Melbourne",
+            "creation-date": "2015-12-02"
+          },
+          "data-management": {
+            "source-data-update-frequency": "Annually",
+            "group": "Business Excellence"
+          },
+          "how-to-use": {
+            "each-row-is-a": "Cafe, restaurant or bistro establishment",
+            "linked-to": null,
+            "further-information": null
+          },
+          "quality": {
+            "update-frequency": "Annually",
+            "whats-included": "Full dataset has been included",
+            "reliability-level": "Reliable and timely",
+            "data-quality-statement": "A team of census officers conduct field interviews which involves visiting every establishment in every building in the Census area (City of Melbourne municipality). Every commercial property is surveyed at least once every two years.",
+            "known-issues": null
+          },
+          "melbourne-metadata": {
+            "geographic-coverage-jurisdiction": null,
+            "time-period-covered": null
+          },
+          "metadata": {
+            "downloads": null
+          }
+        }
+      }
+    },
+    {
+      "url": "https://data.melbourne.vic.gov.au/api/explore/v2.1/catalog/datasets/small-areas-for-census-of-land-use-and-employment-clue",
+      "success": true,
+      "payload": {
+        "visibility": "domain",
+        "fields": [
+          {
+            "name": "geo_point_2d",
+            "description": null,
+            "annotations": {},
+            "label": "Geo Point",
+            "type": "geo_point_2d"
+          },
+          {
+            "name": "geo_shape",
+            "description": null,
+            "annotations": {},
+            "label": "Geo Shape",
+            "type": "geo_shape"
+          },
+          {
+            "name": "featurenam",
+            "description": null,
+            "annotations": {
+              "facet": true
+            },
+            "label": "featurenam",
+            "type": "text"
+          },
+          {
+            "name": "shape_area",
+            "description": null,
+            "annotations": {},
+            "label": "shape_area",
+            "type": "text"
+          },
+          {
+            "name": "shape_len",
+            "description": null,
+            "annotations": {},
+            "label": "shape_len",
+            "type": "text"
+          }
+        ],
+        "dataset_id": "small-areas-for-census-of-land-use-and-employment-clue",
+        "dataset_uid": "da_3h41rj",
+        "has_records": true,
+        "features": [
+          "geo",
+          "analyze"
+        ],
+        "attachments": [
+          {
+            "id": "clue_definitions_pdf",
+            "title": "CLUE_Definitions.pdf",
+            "mimetype": "application/pdf",
+            "url": "https://data.melbourne.vic.gov.au/api/explore/v2.1/catalog/datasets/small-areas-for-census-of-land-use-and-employment-clue/attachments/clue_definitions_pdf"
+          }
+        ],
+        "alternative_exports": [],
+        "data_visible": true,
+        "metas": {
+          "default": {
+            "title": "Small Areas for Census of Land Use and Employment (CLUE)",
+            "description": "Spatial layer of small areas used for the City of Melbourne's Census Of Land Use And Employment (CLUE) analysis. Note that these small area boundaries do not exactly correspond with gazetted suburb or postcode boundaries.\n<br/>\n\n<br/>\nFor more information about CLUE see <a href=\"http://www.melbourne.vic.gov.au/clue\" target=\"_blank\">http://www.melbourne.vic.gov.au/clue</a>",
+            "theme": [
+              "Business"
+            ],
+            "keyword": [
+              "census of land use and employment",
+              "clue",
+              "small areas",
+              "suburb"
+            ],
+            "license": "CC BY",
+            "license_url": "https://creativecommons.org/licenses/by/4.0/legalcode",
+            "language": "en",
+            "metadata_languages": [
+              "en"
+            ],
+            "timezone": null,
+            "modified": "2026-09-03T12:54:55+00:00",
+            "modified_updates_on_metadata_change": true,
+            "modified_updates_on_data_change": false,
+            "data_processed": "2022-11-13T10:18:37+00:00",
+            "metadata_processed": "2026-09-03T12:54:57.005000+00:00",
+            "geographic_reference": null,
+            "geographic_reference_auto": false,
+            "territory": null,
+            "geometry_types": [
+              "Polygon"
+            ],
+            "bbox": {
+              "type": "Feature",
+              "geometry": {
+                "coordinates": [
+                  [
+                    [
+                      144.99129781499505,
+                      -37.77544814161956
+                    ],
+                    [
+                      144.8969619255513,
+                      -37.77544814161956
+                    ],
+                    [
+                      144.8969619255513,
+                      -37.85066021606326
+                    ],
+                    [
+                      144.99129781499505,
+                      -37.85066021606326
+                    ],
+                    [
+                      144.99129781499505,
+                      -37.77544814161956
+                    ]
+                  ]
+                ],
+                "type": "Polygon"
+              },
+              "properties": {}
+            },
+            "publisher": "data.melbourne.vic.gov.au",
+            "references": null,
+            "records_count": 13,
+            "attributions": null,
+            "source_domain": null,
+            "source_domain_title": null,
+            "source_domain_address": null,
+            "source_dataset": null,
+            "shared_catalog": null,
+            "federated": false,
+            "parent_domain": "mav-technology-geelongvic",
+            "update_frequency": null
+          },
+          "custom": {
+            "dataset-owner": "City of Melbourne Open Data Team",
+            "data-provided-by": "City of Melbourne",
+            "creation-date": "2014-05-02"
+          },
+          "data-management": {
+            "source-data-update-frequency": "Annually",
+            "group": "City Strategy and Place"
+          },
+          "how-to-use": {
+            "each-row-is-a": null,
+            "linked-to": null,
+            "further-information": null
+          },
+          "quality": {
+            "update-frequency": "Annually",
+            "whats-included": "All data held by the City of Melbourne has been included",
+            "reliability-level": null,
+            "data-quality-statement": null,
+            "known-issues": null
+          },
+          "melbourne-metadata": {
+            "geographic-coverage-jurisdiction": null,
+            "time-period-covered": null
+          },
+          "metadata": {
+            "downloads": null
+          }
+        }
+      }
+    }
+  ],
+  "review_spot_checks": [
+    {
+      "name": "Rice Paper Scissors",
+      "source_url": "https://www.tripadvisor.com.au/Restaurant_Review-g255100-d5539081-Reviews-Rice_Paper_Scissors-Melbourne_Victoria.html",
+      "method": "Web reader of original Tripadvisor listing; no review prose used.",
+      "observed": {
+        "rating": 4.6,
+        "review_count": 3058,
+        "price_raw": "$$ - $$$",
+        "address": "15 Hardware Lane, Melbourne, Victoria 3000 Australia",
+        "cuisines": [
+          "Asian",
+          "Thai",
+          "Fusion",
+          "Vietnamese"
+        ],
+        "diets": [
+          "Vegetarian friendly",
+          "Vegan options",
+          "Gluten free options"
+        ],
+        "reader_crawl_label": "yesterday"
+      },
+      "result": "All observed factual fields match the retained 2026-10-06 snapshot."
+    },
+    {
+      "name": "The Hardware Societe",
+      "source_url": "https://www.tripadvisor.com.au/Restaurant_Review-g255100-d1971945-Reviews-The_Hardware_Societe-Melbourne_Victoria.html",
+      "method": "Web reader of original Tripadvisor listing; no review prose used.",
+      "observed": {
+        "rating": 4.5,
+        "review_count": 1903,
+        "price_raw": "$$ - $$$",
+        "address": "10 Katherine Pl, Melbourne, Victoria 3000 Australia",
+        "cuisines": [
+          "Cafe",
+          "Australian"
+        ],
+        "diets": [
+          "Gluten free options",
+          "Vegetarian friendly",
+          "Vegan options"
+        ],
+        "reader_crawl_label": "today"
+      },
+      "result": "All observed factual fields match the retained 2026-10-06 snapshot."
+    },
+    {
+      "name": "Hakata Gensuke Ramen",
+      "source_url": "https://www.tripadvisor.com.au/Restaurant_Review-g255100-d7079347-Reviews-Hakata_Gensuke_Ramen-Melbourne_Victoria.html",
+      "method": "Web reader of original Tripadvisor listing; no review prose used.",
+      "observed": {
+        "rating": 4.4,
+        "review_count": 377,
+        "price_raw": "$",
+        "address": "168 Russell St, Melbourne, Victoria 3000 Australia",
+        "cuisines": [
+          "Japanese",
+          "Asian",
+          "Soups"
+        ],
+        "diets": [],
+        "reader_crawl_label": "today"
+      },
+      "result": "All observed factual fields match the retained 2026-10-06 snapshot."
+    }
+  ],
+  "review_snapshot_policy": "Retain the 2026-10-06 snapshot. These three spot checks do not certify current freshness of all31 listings; crawler labels are not a source update timestamp."
+}

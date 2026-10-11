@@ -1,0 +1,304 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Proportional-symbol map. The host injects filtered restaurant rows into the named reviews dataset. Only valid matched coordinates are drawn. Circle AREA, not radius, is proportional to cumulative review count. Background boundaries keep the map extent fixed during filtering.",
+  "width": "container",
+  "height": 330,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+  "background": "transparent",
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": "normal",
+      "labelColor": "#183b35",
+      "titleColor": "#183b35",
+      "domainColor": "#bdc9c2",
+      "tickColor": "#bdc9c2",
+      "gridColor": "#e6ebe5",
+      "labelPadding": 6,
+      "titlePadding": 10
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleColor": "#183b35",
+      "labelColor": "#183b35",
+      "symbolStrokeWidth": 1,
+      "padding": 4
+    },
+    "title": {
+      "fontSize": 13,
+      "color": "#183b35",
+      "anchor": "start",
+      "fontWeight": "normal"
+    }
+  },
+  "data": {
+    "name": "reviews",
+    "values": []
+  },
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [
+      -36,
+      -38
+    ],
+    "rotate": [
+      -145,
+      0,
+      0
+    ]
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/processed/areas.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#edf0e8",
+        "stroke": "#ffffff",
+        "strokeWidth": 0.8
+      }
+    },
+    {
+      "data": {
+        "url": "data/processed/areas.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "transform": [
+        {
+          "filter": {
+            "field": "properties.area",
+            "oneOf": [
+              "Melbourne (CBD)",
+              "Carlton",
+              "Docklands"
+            ]
+          }
+        },
+        {
+          "calculate": "geoCentroid(null, datum)",
+          "as": "label_centroid"
+        },
+        {
+          "calculate": "datum.label_centroid[0]",
+          "as": "label_lon"
+        },
+        {
+          "calculate": "datum.label_centroid[1]",
+          "as": "label_lat"
+        },
+        {
+          "calculate": "datum.properties.area === 'Melbourne (CBD)' ? 'CBD' : datum.properties.area",
+          "as": "label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "fill": "#fffdf7",
+        "stroke": "#fffdf7",
+        "strokeWidth": 3,
+        "strokeOpacity": 0.85
+      },
+      "encoding": {
+        "longitude": {
+          "field": "label_lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "label_lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    },
+    {
+      "data": {
+        "url": "data/processed/areas.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "transform": [
+        {
+          "filter": {
+            "field": "properties.area",
+            "oneOf": [
+              "Melbourne (CBD)",
+              "Carlton",
+              "Docklands"
+            ]
+          }
+        },
+        {
+          "calculate": "geoCentroid(null, datum)",
+          "as": "label_centroid"
+        },
+        {
+          "calculate": "datum.label_centroid[0]",
+          "as": "label_lon"
+        },
+        {
+          "calculate": "datum.label_centroid[1]",
+          "as": "label_lat"
+        },
+        {
+          "calculate": "datum.properties.area === 'Melbourne (CBD)' ? 'CBD' : datum.properties.area",
+          "as": "label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "fill": "#183b35"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "label_lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "label_lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "isValid(datum.longitude) && isValid(datum.latitude)"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "stroke": "#ffffff",
+        "strokeWidth": 0.8,
+        "opacity": 0.77
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "size": {
+          "field": "review_count",
+          "type": "quantitative",
+          "title": "Reviews",
+          "scale": {
+            "type": "linear",
+            "domain": [
+              0,
+              6500
+            ],
+            "range": [
+              0,
+              750
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "values": [
+              500,
+              2000,
+              6000
+            ],
+            "format": ",.0f"
+          }
+        },
+        "color": {
+          "field": "rating",
+          "type": "quantitative",
+          "title": "Rating / 5",
+          "scale": {
+            "domain": [
+              4,
+              5
+            ],
+            "range": [
+              "#e4c99a",
+              "#195c48"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "gradientLength": 100,
+            "format": ".1f"
+          }
+        },
+        "order": {
+          "field": "review_count",
+          "type": "quantitative",
+          "sort": "descending"
+        },
+        "tooltip": [
+          {
+            "field": "name",
+            "type": "nominal",
+            "title": "Restaurant"
+          },
+          {
+            "field": "rating",
+            "type": "quantitative",
+            "title": "Rating / 5",
+            "format": ".1f"
+          },
+          {
+            "field": "review_count",
+            "type": "quantitative",
+            "title": "Cumulative reviews",
+            "format": ",.0f"
+          },
+          {
+            "field": "price",
+            "type": "nominal",
+            "title": "Price tier"
+          },
+          {
+            "field": "source_url",
+            "type": "nominal",
+            "title": "Listing source"
+          },
+          {
+            "field": "area",
+            "type": "nominal",
+            "title": "2024 CLUE area"
+          },
+          {
+            "field": "join_note",
+            "type": "nominal",
+            "title": "Location match"
+          }
+        ]
+      }
+    }
+  ]
+}

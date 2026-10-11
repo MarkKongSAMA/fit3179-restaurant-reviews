@@ -1,0 +1,150 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Marginal counts of source-listed dietary tags in the full sample. A restaurant may contribute to several bars. Missing tags are unknown and are not evidence that a dietary option is unavailable. Counts describe listing claims, not independently checked menus.",
+  "width": "container",
+  "height": 200,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+  "background": "transparent",
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": "normal",
+      "labelColor": "#183b35",
+      "titleColor": "#183b35",
+      "domainColor": "#bdc9c2",
+      "tickColor": "#bdc9c2",
+      "gridColor": "#e6ebe5",
+      "labelPadding": 6,
+      "titlePadding": 10
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleColor": "#183b35",
+      "labelColor": "#183b35",
+      "symbolStrokeWidth": 1,
+      "padding": 4
+    },
+    "title": {
+      "fontSize": 13,
+      "color": "#183b35",
+      "anchor": "start",
+      "fontWeight": "normal"
+    }
+  },
+  "data": {
+    "url": "data/processed/reviews.json"
+  },
+  "transform": [
+    {
+      "flatten": [
+        "diets"
+      ],
+      "as": [
+        "diet"
+      ]
+    },
+    {
+      "filter": {
+        "field": "diet",
+        "oneOf": [
+          "Vegetarian friendly",
+          "Vegan options",
+          "Gluten free options"
+        ]
+      }
+    },
+    {
+      "aggregate": [
+        {
+          "op": "count",
+          "as": "restaurants"
+        }
+      ],
+      "groupby": [
+        "diet"
+      ]
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "diet",
+      "type": "nominal",
+      "title": null,
+      "sort": [
+        "Vegetarian friendly",
+        "Gluten free options",
+        "Vegan options"
+      ],
+      "axis": {
+        "labelLimit": 140
+      }
+    },
+    "x": {
+      "field": "restaurants",
+      "type": "quantitative",
+      "title": "Restaurants with tag (of 31)",
+      "scale": {
+        "domain": [
+          0,
+          33
+        ]
+      },
+      "axis": {
+        "values": [
+          0,
+          10,
+          20,
+          30
+        ]
+      }
+    },
+    "tooltip": [
+      {
+        "field": "diet",
+        "type": "nominal",
+        "title": "Listing tag"
+      },
+      {
+        "field": "restaurants",
+        "type": "quantitative",
+        "title": "Sample restaurants",
+        "format": ".0f"
+      }
+    ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "color": "#28746b",
+        "size": 24
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 5,
+        "fontSize": 12,
+        "color": "#183b35"
+      },
+      "encoding": {
+        "text": {
+          "field": "restaurants",
+          "type": "quantitative",
+          "format": ".0f"
+        }
+      }
+    }
+  ]
+}

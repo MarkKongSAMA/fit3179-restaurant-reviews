@@ -1,0 +1,207 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Up to ten injected listings, ordered by rating descending, then cumulative review count descending, then name alphabetically. Review count is only a tie-breaking display rule and does not validate score reliability. Equal scores remain visually equal. The host supplies rows matching shared controls and the scatter brush. Rating axis deliberately zoomed to 4–5.",
+  "width": "container",
+  "height": 310,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+  "background": "transparent",
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": "normal",
+      "labelColor": "#183b35",
+      "titleColor": "#183b35",
+      "domainColor": "#bdc9c2",
+      "tickColor": "#bdc9c2",
+      "gridColor": "#e6ebe5",
+      "labelPadding": 6,
+      "titlePadding": 10
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleColor": "#183b35",
+      "labelColor": "#183b35",
+      "symbolStrokeWidth": 1,
+      "padding": 4
+    },
+    "title": {
+      "fontSize": 13,
+      "color": "#183b35",
+      "anchor": "start",
+      "fontWeight": "normal"
+    }
+  },
+  "data": {
+    "name": "reviews",
+    "values": []
+  },
+  "transform": [
+    {
+      "window": [
+        {
+          "op": "row_number",
+          "as": "display_order"
+        }
+      ],
+      "sort": [
+        {
+          "field": "rating",
+          "order": "descending"
+        },
+        {
+          "field": "review_count",
+          "order": "descending"
+        },
+        {
+          "field": "name",
+          "order": "ascending"
+        }
+      ]
+    },
+    {
+      "filter": "datum.display_order <= 10"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "name",
+      "type": "nominal",
+      "title": null,
+      "sort": {
+        "field": "display_order",
+        "order": "ascending"
+      },
+      "axis": {
+        "labelLimit": 220,
+        "labelPadding": 10,
+        "ticks": false,
+        "domain": false
+      }
+    },
+    "x": {
+      "field": "rating",
+      "type": "quantitative",
+      "title": "Rating / 5 (zoomed)",
+      "scale": {
+        "domain": [
+          4,
+          5
+        ],
+        "zero": false,
+        "nice": false
+      },
+      "axis": {
+        "values": [
+          4,
+          4.2,
+          4.4,
+          4.6,
+          4.8,
+          5
+        ],
+        "format": ".1f"
+      }
+    },
+    "tooltip": [
+      {
+        "field": "name",
+        "type": "nominal",
+        "title": "Restaurant"
+      },
+      {
+        "field": "rating",
+        "type": "quantitative",
+        "title": "Rating / 5",
+        "format": ".1f"
+      },
+      {
+        "field": "review_count",
+        "type": "quantitative",
+        "title": "Cumulative reviews",
+        "format": ",.0f"
+      },
+      {
+        "field": "price",
+        "type": "nominal",
+        "title": "Price tier"
+      },
+      {
+        "field": "source_url",
+        "type": "nominal",
+        "title": "Listing source"
+      }
+    ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#d6dfd6",
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "x2": {
+          "datum": 4
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 100,
+        "stroke": "#fffdf7",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "color": {
+          "field": "price",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Budget",
+              "Mid-range",
+              "Premium"
+            ],
+            "range": [
+              "#d5a245",
+              "#28746b",
+              "#a65a3c"
+            ]
+          },
+          "legend": {
+            "title": "Price tier",
+            "orient": "bottom",
+            "direction": "horizontal"
+          }
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 10,
+        "fontSize": 12,
+        "color": "#183b35"
+      },
+      "encoding": {
+        "text": {
+          "field": "rating",
+          "type": "quantitative",
+          "format": ".1f"
+        }
+      }
+    }
+  ]
+}

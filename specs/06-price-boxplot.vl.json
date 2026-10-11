@@ -1,0 +1,240 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Rating distributions by ordinal price tier for all 31 listings. Boxes show quartiles and median, whiskers show minimum and maximum, and every listing is also drawn as a point. Horizontal offsets only separate marks and carry no meaning. Group sizes are displayed. Rating axis zoomed to 4–5.",
+  "width": "container",
+  "height": 260,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+  "background": "transparent",
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": "normal",
+      "labelColor": "#183b35",
+      "titleColor": "#183b35",
+      "domainColor": "#bdc9c2",
+      "tickColor": "#bdc9c2",
+      "gridColor": "#e6ebe5",
+      "labelPadding": 6,
+      "titlePadding": 10
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleColor": "#183b35",
+      "labelColor": "#183b35",
+      "symbolStrokeWidth": 1,
+      "padding": 4
+    },
+    "title": {
+      "fontSize": 13,
+      "color": "#183b35",
+      "anchor": "start",
+      "fontWeight": "normal"
+    }
+  },
+  "data": {
+    "url": "data/processed/reviews.json"
+  },
+  "encoding": {
+    "x": {
+      "field": "price",
+      "type": "nominal",
+      "sort": [
+        "Budget",
+        "Mid-range",
+        "Premium"
+      ],
+      "title": null,
+      "axis": {
+        "labelAngle": 0
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "boxplot",
+        "extent": "min-max",
+        "size": 38,
+        "box": {
+          "fillOpacity": 0.2,
+          "stroke": "#183b35"
+        },
+        "median": {
+          "color": "#183b35"
+        },
+        "ticks": {
+          "size": 18,
+          "color": "#183b35"
+        },
+        "rule": {
+          "color": "#183b35"
+        }
+      },
+      "encoding": {
+        "color": {
+          "field": "price",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Budget",
+              "Mid-range",
+              "Premium"
+            ],
+            "range": [
+              "#d5a245",
+              "#28746b",
+              "#a65a3c"
+            ]
+          },
+          "legend": null
+        },
+        "y": {
+          "field": "rating",
+          "type": "quantitative",
+          "title": "Rating / 5 (zoomed)",
+          "scale": {
+            "domain": [
+              4,
+              5
+            ],
+            "zero": false,
+            "nice": false
+          },
+          "axis": {
+            "values": [
+              4,
+              4.2,
+              4.4,
+              4.6,
+              4.8,
+              5
+            ],
+            "format": ".1f"
+          }
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "calculate": "(toNumber(datum.id) % 11) - 5",
+          "as": "display_offset"
+        }
+      ],
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 39,
+        "stroke": "#ffffff",
+        "strokeWidth": 0.5,
+        "opacity": 0.9,
+        "xOffset": {
+          "expr": "datum.display_offset * 3.4"
+        }
+      },
+      "encoding": {
+        "y": {
+          "field": "rating",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              4,
+              5
+            ],
+            "zero": false,
+            "nice": false
+          }
+        },
+        "color": {
+          "field": "price",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Budget",
+              "Mid-range",
+              "Premium"
+            ],
+            "range": [
+              "#d5a245",
+              "#28746b",
+              "#a65a3c"
+            ]
+          },
+          "legend": null
+        },
+        "tooltip": [
+          {
+            "field": "name",
+            "type": "nominal",
+            "title": "Restaurant"
+          },
+          {
+            "field": "rating",
+            "type": "quantitative",
+            "title": "Rating / 5",
+            "format": ".1f"
+          },
+          {
+            "field": "review_count",
+            "type": "quantitative",
+            "title": "Cumulative reviews",
+            "format": ",.0f"
+          },
+          {
+            "field": "price",
+            "type": "nominal",
+            "title": "Price tier"
+          },
+          {
+            "field": "source_url",
+            "type": "nominal",
+            "title": "Listing source"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "aggregate": [
+            {
+              "op": "count",
+              "as": "n"
+            }
+          ],
+          "groupby": [
+            "price"
+          ]
+        },
+        {
+          "calculate": "'n = ' + datum.n",
+          "as": "sample_label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "color": "#183b35",
+        "baseline": "top"
+      },
+      "encoding": {
+        "y": {
+          "value": 5
+        },
+        "text": {
+          "field": "sample_label"
+        }
+      }
+    }
+  ]
+}

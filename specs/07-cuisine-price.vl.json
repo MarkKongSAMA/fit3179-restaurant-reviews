@@ -1,0 +1,215 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "The 12 most frequent source-listed cuisine tags, selected by total listing frequency descending then tag name ascending. Each restaurant may have several tags. Cell counts are restaurants carrying that tag in a price tier; absent combinations are explicit zero cells. This is not an exclusive cuisine classification.",
+  "width": "container",
+  "height": 330,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+  "background": "transparent",
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": "normal",
+      "labelColor": "#183b35",
+      "titleColor": "#183b35",
+      "domainColor": "#bdc9c2",
+      "tickColor": "#bdc9c2",
+      "gridColor": "#e6ebe5",
+      "labelPadding": 6,
+      "titlePadding": 10
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleColor": "#183b35",
+      "labelColor": "#183b35",
+      "symbolStrokeWidth": 1,
+      "padding": 4
+    },
+    "title": {
+      "fontSize": 13,
+      "color": "#183b35",
+      "anchor": "start",
+      "fontWeight": "normal"
+    }
+  },
+  "data": {
+    "url": "data/processed/reviews.json"
+  },
+  "transform": [
+    {
+      "flatten": [
+        "cuisines"
+      ],
+      "as": [
+        "cuisine"
+      ]
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "count",
+          "as": "tag_total"
+        }
+      ],
+      "groupby": [
+        "cuisine"
+      ]
+    },
+    {
+      "window": [
+        {
+          "op": "dense_rank",
+          "as": "tag_rank"
+        }
+      ],
+      "sort": [
+        {
+          "field": "tag_total",
+          "order": "descending"
+        },
+        {
+          "field": "cuisine",
+          "order": "ascending"
+        }
+      ]
+    },
+    {
+      "filter": "datum.tag_rank <= 12"
+    },
+    {
+      "aggregate": [
+        {
+          "op": "count",
+          "as": "restaurants"
+        }
+      ],
+      "groupby": [
+        "cuisine",
+        "price",
+        "tag_total",
+        "tag_rank"
+      ]
+    },
+    {
+      "impute": "restaurants",
+      "key": "price",
+      "keyvals": [
+        "Budget",
+        "Mid-range",
+        "Premium"
+      ],
+      "groupby": [
+        "cuisine",
+        "tag_total",
+        "tag_rank"
+      ],
+      "value": 0
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "price",
+      "type": "nominal",
+      "sort": [
+        "Budget",
+        "Mid-range",
+        "Premium"
+      ],
+      "title": null,
+      "axis": {
+        "labelAngle": 0
+      }
+    },
+    "y": {
+      "field": "cuisine",
+      "type": "nominal",
+      "title": null,
+      "sort": {
+        "field": "tag_rank",
+        "order": "ascending"
+      },
+      "axis": {
+        "labelLimit": 115
+      }
+    },
+    "tooltip": [
+      {
+        "field": "cuisine",
+        "type": "nominal",
+        "title": "Listed tag"
+      },
+      {
+        "field": "price",
+        "type": "nominal",
+        "title": "Price tier"
+      },
+      {
+        "field": "restaurants",
+        "type": "quantitative",
+        "title": "Restaurants",
+        "format": ".0f"
+      },
+      {
+        "field": "tag_total",
+        "type": "quantitative",
+        "title": "Tag total, all prices",
+        "format": ".0f"
+      }
+    ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "stroke": "#fffdf7",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "color": {
+          "field": "restaurants",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              8
+            ],
+            "range": [
+              "#f1f3e8",
+              "#195c48"
+            ]
+          },
+          "legend": null
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 12
+      },
+      "encoding": {
+        "text": {
+          "field": "restaurants",
+          "type": "quantitative",
+          "format": ".0f"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.restaurants >= 5",
+            "value": "#ffffff"
+          },
+          "value": "#183b35"
+        }
+      }
+    }
+  ]
+}

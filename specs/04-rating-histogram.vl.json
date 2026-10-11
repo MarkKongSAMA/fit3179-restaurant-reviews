@@ -1,0 +1,131 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Histogram of the complete 31-listing convenience sample. Ratings are recorded to 0.1; equal-width bins are centred on those reported values. Missing score bins have zero observations. The rating axis is deliberately zoomed to 4–5.",
+  "width": "container",
+  "height": 260,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+  "background": "transparent",
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": "normal",
+      "labelColor": "#183b35",
+      "titleColor": "#183b35",
+      "domainColor": "#bdc9c2",
+      "tickColor": "#bdc9c2",
+      "gridColor": "#e6ebe5",
+      "labelPadding": 6,
+      "titlePadding": 10
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleColor": "#183b35",
+      "labelColor": "#183b35",
+      "symbolStrokeWidth": 1,
+      "padding": 4
+    },
+    "title": {
+      "fontSize": 13,
+      "color": "#183b35",
+      "anchor": "start",
+      "fontWeight": "normal"
+    }
+  },
+  "data": {
+    "url": "data/processed/reviews.json"
+  },
+  "transform": [
+    {
+      "calculate": "round(datum.rating * 10) / 10 - 0.05",
+      "as": "bin_start"
+    },
+    {
+      "calculate": "round(datum.rating * 10) / 10 + 0.05",
+      "as": "bin_end"
+    },
+    {
+      "aggregate": [
+        {
+          "op": "count",
+          "as": "restaurants"
+        }
+      ],
+      "groupby": [
+        "rating",
+        "bin_start",
+        "bin_end"
+      ]
+    }
+  ],
+  "mark": {
+    "type": "bar",
+    "color": "#28746b",
+    "binSpacing": 1
+  },
+  "encoding": {
+    "x": {
+      "field": "bin_start",
+      "type": "quantitative",
+      "bin": "binned",
+      "title": "Rating / 5 (zoomed)",
+      "scale": {
+        "domain": [
+          4,
+          5
+        ],
+        "zero": false,
+        "nice": false
+      },
+      "axis": {
+        "values": [
+          4,
+          4.2,
+          4.4,
+          4.6,
+          4.8,
+          5
+        ],
+        "format": ".1f",
+        "grid": false
+      }
+    },
+    "x2": {
+      "field": "bin_end"
+    },
+    "y": {
+      "field": "restaurants",
+      "type": "quantitative",
+      "title": "Restaurants",
+      "axis": {
+        "tickMinStep": 1
+      },
+      "scale": {
+        "zero": true
+      }
+    },
+    "tooltip": [
+      {
+        "field": "rating",
+        "type": "quantitative",
+        "title": "Reported rating",
+        "format": ".1f"
+      },
+      {
+        "field": "restaurants",
+        "type": "quantitative",
+        "title": "Sample restaurants",
+        "format": ".0f"
+      }
+    ]
+  }
+}

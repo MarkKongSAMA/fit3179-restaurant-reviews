@@ -1,0 +1,233 @@
+{
+  "accessed_date": "2026-10-06",
+  "census_year": 2024,
+  "raw_seating_rows": 3249,
+  "cafe_restaurant_seating_rows": 2435,
+  "venues": 1645,
+  "seats": 130223,
+  "small_areas": 13,
+  "populated_grid_cells": 87,
+  "grid_size_m": 500,
+  "review_sample": 31,
+  "mapped_reviews": 27,
+  "unmapped_reviews": 4,
+  "rating_min": 4.1,
+  "rating_max": 4.8,
+  "rating_median": 4.5,
+  "reviews_total": 39882,
+  "review_count_median": 1083,
+  "price_counts": {
+    "Mid-range": 20,
+    "Budget": 4,
+    "Premium": 7
+  },
+  "diet_counts": {
+    "Vegetarian friendly": 29,
+    "Vegan options": 25,
+    "Gluten free options": 27
+  },
+  "diet_overlap_regions": [
+    {
+      "vegetarian_listed": false,
+      "vegan_listed": false,
+      "gluten_free_listed": false,
+      "count": 1
+    },
+    {
+      "vegetarian_listed": true,
+      "vegan_listed": false,
+      "gluten_free_listed": false,
+      "count": 1
+    },
+    {
+      "vegetarian_listed": false,
+      "vegan_listed": true,
+      "gluten_free_listed": false,
+      "count": 0
+    },
+    {
+      "vegetarian_listed": false,
+      "vegan_listed": false,
+      "gluten_free_listed": true,
+      "count": 1
+    },
+    {
+      "vegetarian_listed": true,
+      "vegan_listed": true,
+      "gluten_free_listed": false,
+      "count": 2
+    },
+    {
+      "vegetarian_listed": true,
+      "vegan_listed": false,
+      "gluten_free_listed": true,
+      "count": 3
+    },
+    {
+      "vegetarian_listed": false,
+      "vegan_listed": true,
+      "gluten_free_listed": true,
+      "count": 0
+    },
+    {
+      "vegetarian_listed": true,
+      "vegan_listed": true,
+      "gluten_free_listed": true,
+      "count": 23
+    }
+  ],
+  "diet_overlap_note": "False in a region means the tag was not recorded, not that the option is unavailable.",
+  "missing_diet_rows": 1,
+  "first_listed_cuisine_counts": {
+    "Asian": 5,
+    "Cafe": 2,
+    "Italian": 8,
+    "Steakhouse": 3,
+    "Japanese": 4,
+    "French": 2,
+    "International": 1,
+    "German": 1,
+    "Mediterranean": 2,
+    "European": 1,
+    "Chinese": 2
+  },
+  "all_cuisine_tag_counts": {
+    "European": 9,
+    "Asian": 8,
+    "Italian": 8,
+    "Australian": 7,
+    "Mediterranean": 7,
+    "Contemporary": 4,
+    "Fusion": 4,
+    "Healthy": 4,
+    "Japanese": 4,
+    "Steakhouse": 4,
+    "Vietnamese": 4,
+    "Cafe": 3,
+    "Thai": 3,
+    "Bar": 2,
+    "Chinese": 2,
+    "French": 2,
+    "Grill": 2,
+    "Pizza": 2,
+    "Seafood": 2,
+    "Spanish": 2,
+    "Street Food": 2,
+    "Cantonese": 1,
+    "Catalan": 1,
+    "Central American": 1,
+    "Central European": 1,
+    "Gastropub": 1,
+    "German": 1,
+    "Greek": 1,
+    "Hong Kong": 1,
+    "International": 1,
+    "Middle Eastern": 1,
+    "Persian": 1,
+    "Pub": 1,
+    "Shanghai": 1,
+    "Soups": 1,
+    "Turkish": 1
+  },
+  "rating_distribution": [
+    {
+      "rating": 4.1,
+      "count": 4
+    },
+    {
+      "rating": 4.2,
+      "count": 1
+    },
+    {
+      "rating": 4.3,
+      "count": 3
+    },
+    {
+      "rating": 4.4,
+      "count": 3
+    },
+    {
+      "rating": 4.5,
+      "count": 8
+    },
+    {
+      "rating": 4.6,
+      "count": 5
+    },
+    {
+      "rating": 4.7,
+      "count": 5
+    },
+    {
+      "rating": 4.8,
+      "count": 2
+    }
+  ],
+  "price_rating_medians": {
+    "Budget": 4.5,
+    "Mid-range": 4.5,
+    "Premium": 4.5
+  },
+  "by_area": {
+    "Melbourne (CBD)": 953,
+    "North Melbourne": 62,
+    "Carlton": 176,
+    "Melbourne (Remainder)": 31,
+    "East Melbourne": 28,
+    "Parkville": 26,
+    "South Yarra": 8,
+    "West Melbourne (Residential)": 40,
+    "Kensington": 24,
+    "Docklands": 157,
+    "Southbank": 125,
+    "Port Melbourne": 15
+  },
+  "projection_roundtrip_max_degrees": 3.1454305826628115e-10,
+  "max_polygon_area_relative_difference_from_official": 1.3204575657171695e-05,
+  "sources": [
+    {
+      "publisher": "City of Melbourne",
+      "dataset": "Café, restaurant, bistro seats",
+      "url": "https://data.melbourne.vic.gov.au/explore/dataset/cafes-and-restaurants-with-seating-capacity/",
+      "period": "2024",
+      "data_processed": "2026-03-16T21:21:12+00:00",
+      "metadata_processed": "2026-09-03T13:02:08.779000+00:00",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/legalcode"
+    },
+    {
+      "publisher": "City of Melbourne",
+      "dataset": "CLUE small areas",
+      "url": "https://data.melbourne.vic.gov.au/explore/dataset/small-areas-for-census-of-land-use-and-employment-clue/",
+      "data_processed": "2022-11-13T10:18:37+00:00",
+      "metadata_processed": "2026-09-03T12:54:57.005000+00:00",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/legalcode"
+    },
+    {
+      "publisher": "Tripadvisor",
+      "dataset": "31 selected Melbourne restaurant listings",
+      "url": "https://www.tripadvisor.com.au/Restaurants-g255100-Melbourne_Victoria.html",
+      "accessed_date": "2026-10-06",
+      "freshness": "Web-reader snapshot; individual pages may be cached.",
+      "license": "No open-data license asserted; factual listing metadata only, with per-listing attribution."
+    }
+  ],
+  "limits": [
+    "Non-random convenience sample: 25 featured listings plus six selected fine-dining listings.",
+    "Ratings are not representative of all Melbourne restaurants; sample range is 4.1–4.8.",
+    "Review counts are cumulative snapshots, not annual visits or a guarantee of rating reliability.",
+    "Price symbols are ordinal platform bands, not dollar amounts.",
+    "Primary cuisine means first source-listed tag; platform order is not a verified primary cuisine.",
+    "Dietary tags describe listing claims; absence means unknown, not unavailable.",
+    "2024 locations provide historical building-level context and are not current navigation guidance.",
+    "CLUE areas differ from gazetted suburbs; whole-polygon areas include non-dining land and water.",
+    "Four uncertain or unmatched locations are omitted from the review map but retained in all sample charts."
+  ],
+  "official_freshness_audit": {
+    "audit_date": "2026-10-11",
+    "latest_available_census_year": 2024,
+    "query_url": "https://data.melbourne.vic.gov.au/api/explore/v2.1/catalog/datasets/cafes-and-restaurants-with-seating-capacity/records?select=max%28census_year%29&limit=1",
+    "evidence_file": "data/raw/source-audit-2026-10-11.json"
+  }
+}

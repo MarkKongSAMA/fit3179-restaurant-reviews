@@ -1,0 +1,290 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "width": 330,
+  "height": 300,
+  "padding": 0,
+  "autosize": "none",
+  "background": "transparent",
+  "config": {
+    "font": "Arial",
+    "text": {
+      "font": "Arial",
+      "fontSize": 12,
+      "fill": "#183b35"
+    }
+  },
+  "description": "Nested treemap of cumulative review counts in the 31-listing sample. Hierarchy is sample > price tier > restaurant. Rectangle area shows review volume, not rating or market share. Price groups and leaf values are derived from reviews.json at runtime.",
+  "data": [
+    {
+      "name": "raw",
+      "url": "data/processed/reviews.json",
+      "format": {
+        "type": "json"
+      }
+    },
+    {
+      "name": "total",
+      "source": "raw",
+      "transform": [
+        {
+          "type": "aggregate",
+          "fields": [
+            "review_count"
+          ],
+          "ops": [
+            "sum"
+          ],
+          "as": [
+            "reviews"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tree",
+      "source": "raw",
+      "transform": [
+        {
+          "type": "nest",
+          "keys": [
+            "price"
+          ],
+          "generate": true
+        },
+        {
+          "type": "treemap",
+          "field": "review_count",
+          "sort": {
+            "field": "value",
+            "order": "descending"
+          },
+          "method": "squarify",
+          "ratio": 1.3,
+          "round": true,
+          "paddingInner": 2,
+          "paddingOuter": 2,
+          "paddingTop": 20,
+          "size": [
+            {
+              "signal": "width"
+            },
+            {
+              "signal": "height"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "groups",
+      "source": "tree",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.depth === 1"
+        }
+      ]
+    },
+    {
+      "name": "leaves",
+      "source": "tree",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.depth === 2"
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "priceColor",
+      "type": "ordinal",
+      "domain": [
+        "Budget",
+        "Mid-range",
+        "Premium"
+      ],
+      "range": [
+        "#d5a245",
+        "#28746b",
+        "#a65a3c"
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "type": "rect",
+      "from": {
+        "data": "groups"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "field": "x0"
+          },
+          "y": {
+            "field": "y0"
+          },
+          "x2": {
+            "field": "x1"
+          },
+          "y2": {
+            "field": "y1"
+          },
+          "fill": {
+            "value": "#e6ece3"
+          },
+          "stroke": {
+            "value": "#becbc0"
+          },
+          "strokeWidth": {
+            "value": 0.8
+          },
+          "tooltip": {
+            "signal": "{'Price tier': datum.key, 'Cumulative reviews': format(datum.value, ',.0f')}"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "groups"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "datum.x0 + 5"
+          },
+          "y": {
+            "signal": "datum.y0 + 4"
+          },
+          "baseline": {
+            "value": "top"
+          },
+          "text": {
+            "field": "key"
+          },
+          "fontWeight": {
+            "value": "bold"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "limit": {
+            "signal": "max(0, datum.x1 - datum.x0 - 10)"
+          }
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "name": "restaurantTiles",
+      "from": {
+        "data": "leaves"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "field": "x0"
+          },
+          "y": {
+            "field": "y0"
+          },
+          "x2": {
+            "field": "x1"
+          },
+          "y2": {
+            "field": "y1"
+          },
+          "fill": {
+            "scale": "priceColor",
+            "field": "price"
+          },
+          "stroke": {
+            "value": "#fffdf7"
+          },
+          "strokeWidth": {
+            "value": 0.7
+          },
+          "tooltip": {
+            "signal": "{'Restaurant': datum.name, 'Price tier': datum.price, 'Reviews': format(datum.review_count, ',.0f'), 'Share of sample review total': format(datum.review_count / data('total')[0].reviews, '.1%'), 'Rating / 5': format(datum.rating, '.1f'), 'Source': datum.source_url}"
+          }
+        },
+        "hover": {
+          "stroke": {
+            "value": "#183b35"
+          },
+          "strokeWidth": {
+            "value": 2
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "interactive": false,
+      "from": {
+        "data": "leaves"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "datum.x0 + 5"
+          },
+          "y": {
+            "signal": "datum.y0 + 6"
+          },
+          "baseline": {
+            "value": "top"
+          },
+          "text": {
+            "signal": "datum.x1 - datum.x0 >= 45 && datum.y1 - datum.y0 >= 20 ? datum.name : ''"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "fill": {
+            "signal": "datum.price === 'Budget' ? '#183b35' : '#ffffff'"
+          },
+          "limit": {
+            "signal": "max(0, datum.x1 - datum.x0 - 10)"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "interactive": false,
+      "from": {
+        "data": "leaves"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "datum.x0 + 5"
+          },
+          "y": {
+            "signal": "datum.y0 + 24"
+          },
+          "baseline": {
+            "value": "top"
+          },
+          "text": {
+            "signal": "datum.x1 - datum.x0 >= 48 && datum.y1 - datum.y0 >= 42 ? format(datum.review_count, ',.0f') : ''"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "fill": {
+            "signal": "datum.price === 'Budget' ? '#183b35' : '#ffffff'"
+          },
+          "limit": {
+            "signal": "max(0, datum.x1 - datum.x0 - 10)"
+          }
+        }
+      }
+    }
+  ]
+}

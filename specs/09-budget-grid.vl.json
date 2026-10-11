@@ -1,0 +1,168 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Unit grid of the complete convenience sample: exactly one whole square for each of 31 restaurants. Squares are ordered by ordinal price tier and name. Price categories are platform symbols, not dollar amounts. Hover a square to identify the listing.",
+  "width": "container",
+  "height": 190,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+  "background": "transparent",
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": "normal",
+      "labelColor": "#183b35",
+      "titleColor": "#183b35",
+      "domainColor": "#bdc9c2",
+      "tickColor": "#bdc9c2",
+      "gridColor": "#e6ebe5",
+      "labelPadding": 6,
+      "titlePadding": 10
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleColor": "#183b35",
+      "labelColor": "#183b35",
+      "symbolStrokeWidth": 1,
+      "padding": 4
+    },
+    "title": {
+      "fontSize": 13,
+      "color": "#183b35",
+      "anchor": "start",
+      "fontWeight": "normal"
+    }
+  },
+  "data": {
+    "url": "data/processed/reviews.json"
+  },
+  "transform": [
+    {
+      "calculate": "indexof(['Budget', 'Mid-range', 'Premium'], datum.price)",
+      "as": "price_order"
+    },
+    {
+      "window": [
+        {
+          "op": "row_number",
+          "as": "cell"
+        }
+      ],
+      "sort": [
+        {
+          "field": "price_order"
+        },
+        {
+          "field": "name"
+        }
+      ]
+    },
+    {
+      "calculate": "(datum.cell - 1) % 8",
+      "as": "column"
+    },
+    {
+      "calculate": "floor((datum.cell - 1) / 8)",
+      "as": "row"
+    }
+  ],
+  "mark": {
+    "type": "point",
+    "shape": "square",
+    "filled": true,
+    "size": 675,
+    "opacity": 1,
+    "stroke": "#fffdf7",
+    "strokeWidth": 1
+  },
+  "encoding": {
+    "x": {
+      "field": "column",
+      "type": "ordinal",
+      "scale": {
+        "domain": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "axis": null
+    },
+    "y": {
+      "field": "row",
+      "type": "ordinal",
+      "scale": {
+        "domain": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "axis": null
+    },
+    "color": {
+      "field": "price",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Budget",
+          "Mid-range",
+          "Premium"
+        ],
+        "range": [
+          "#d5a245",
+          "#28746b",
+          "#a65a3c"
+        ]
+      },
+      "legend": {
+        "title": "Price tier",
+        "orient": "bottom",
+        "direction": "horizontal"
+      }
+    },
+    "tooltip": [
+      {
+        "field": "name",
+        "type": "nominal",
+        "title": "Restaurant"
+      },
+      {
+        "field": "rating",
+        "type": "quantitative",
+        "title": "Rating / 5",
+        "format": ".1f"
+      },
+      {
+        "field": "review_count",
+        "type": "quantitative",
+        "title": "Cumulative reviews",
+        "format": ",.0f"
+      },
+      {
+        "field": "price",
+        "type": "nominal",
+        "title": "Price tier"
+      },
+      {
+        "field": "source_url",
+        "type": "nominal",
+        "title": "Listing source"
+      }
+    ]
+  }
+}
