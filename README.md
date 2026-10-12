@@ -14,7 +14,7 @@ python -m http.server 8766 --bind 127.0.0.1
 
 Open `http://127.0.0.1:8766/`. The port is a local preview setting, not an assignment requirement; if you choose another free port, use the same number in the command and browser address. Directly opening `index.html` as a file can block data requests.
 
-Publication deferred at the author's request. GitHub Pages was disabled on 11 October 2026 after a successful deployment check. Local files and repository source are retained. Reserved URL for later publication: https://markkongsama.github.io/fit3179-restaurant-reviews/ .
+URL for publication: https://markkongsama.github.io/fit3179-restaurant-reviews/
 
 ## Structure
 
@@ -54,8 +54,4 @@ Tripadvisor: 31 attributed factual listing records, with individual source URLs 
 
 ## AI acknowledgement
 
-OpenAI Codex assisted with source research, data cleaning and auditing, chart and webpage implementation, debugging, and draft explanatory writing. Runmin Kong is responsible for reviewing the outputs, checking the original sources, and understanding and explaining the submitted design and code. The hand-drawn sketch is a separate author-provided document; a digital design reference must not be represented as the submitted hand drawing.
-
-## Submission materials
-
-Student ID, studio details, assignment report and the original hand-drawn sketch are kept outside this public site until the author supplies and reviews them. This repository is not a Moodle submission. Published accessibility and layout checks are recorded in `docs/verification.md` when completed.
+OpenAI Codex assisted with source research, chart and webpage implementation, and explanatory writing. Runmin Kong is responsible for reviewing the outputs, checking the original sources, debug the submitted design and code.
