@@ -9,12 +9,12 @@ The website explores the 2024 City of Melbourne dining landscape alongside **31 
 Serve this folder with a static web server, then open its local address. For example:
 
 ```sh
-python -m http.server 8765
+python -m http.server 8766 --bind 127.0.0.1
 ```
 
-Open `http://localhost:8765`. Directly opening `index.html` as a file can block data requests.
+Open `http://127.0.0.1:8766/`. The port is a local preview setting, not an assignment requirement; if you choose another free port, use the same number in the command and browser address. Directly opening `index.html` as a file can block data requests.
 
-Published website: https://markkongsama.github.io/fit3179-restaurant-reviews/ . GitHub Pages was enabled from `main` / repository root and the public website was verified on 11 October 2026.
+Publication deferred at the author's request. GitHub Pages was disabled on 11 October 2026 after a successful deployment check. Local files and repository source are retained. Reserved URL for later publication: https://markkongsama.github.io/fit3179-restaurant-reviews/ .
 
 ## Structure
 

@@ -23,3 +23,7 @@ The public URL, https://markkongsama.github.io/fit3179-restaurant-reviews/ , ret
 ## Limits of this verification
 
 The desktop and phone checks cover the observed browser, sizes and scenarios, not every browser, assistive technology or device. No marks or grade are guaranteed by chart counts. The actual hand-drawn sketch has been reported complete by the author but its image has not been supplied for visual comparison. The report therefore remains a draft until the original sketch, student ID, studio details and final author review are added. No Moodle submission has been made.
+
+## Current publication status
+
+The author requested local completion first and publication later. GitHub Pages was disabled on 11 October 2026 (DELETE 204; subsequent GET 404). Earlier deployment checks above are historical. The repository source and local deliverables are retained; do not re-enable Pages until the author requests publication.
