@@ -20,11 +20,16 @@ URL for publication: https://markkongsama.github.io/fit3179-restaurant-reviews/
 
 - `index.html`, `styles.css`, `app.js`: editorial page, responsive layout and shared interactions.
 - `specs/`: twelve readable Vega / Vega-Lite JSON specifications, linked beside each chart.
-- `data/processed/`: downloadable chart-ready data and geography.
+- `data.html`, `data-viewer.js`, `resources.css`: searchable, paginated data tables with CSV and original-format downloads.
+- `data/processed/`: chart-ready JSON and GeoJSON data and geography.
+- `data/downloads/`: Excel-friendly CSV exports of all four displayed datasets.
 - `data/raw/`: preserved source extracts and source metadata used by the preparation script.
 - `scripts/prepare_data.py`: deterministic cleaning, location crosswalk, UTM grid and validation assertions; Python standard library only.
 - `scripts/build_specs.py`: reproducible chart specification generation.
+- `scripts/export_downloads.py`: rebuild and validate the CSV downloads after preparing data.
+- `scripts/build_methods_page.py`: regenerate the readable methods page after updating `docs/data-quality.md`.
 - `docs/data-quality.md`: grain, geographic methods, record joins and interpretation limits.
+- `docs/data-methods.html`: the same methods note rendered for reading directly in a browser.
 - `vendor/`: pinned browser runtimes. Vega 5.33.0, Vega-Lite 5.23.0, Vega-Embed 6.29.0 (BSD-3-Clause; upstream notices retained in `vendor/LICENSES.txt`).
 
 ## Twelve visualisations

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Browse, search and download the data behind Beyond the Stars, a Melbourne restaurant data story.">
+  <title>Explore the data · Beyond the Stars</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="resources.css">
+  <script defer src="data-viewer.js"></script>
+</head>
+<body class="resource-page">
+  <a class="skip" href="#data-main">Skip to the data</a>
+  <header class="masthead">
+    <a class="wordmark" href="index.html">MELBOURNE / AT THE TABLE</a>
+    <a class="resource-back" href="index.html#sources">← Back to the story and sources</a>
+  </header>
+  <main id="data-main">
+    <div class="resource-heading">
+      <p class="eyebrow">BEHIND THE STORY</p>
+      <h1>Explore the data.</h1>
+      <p class="resource-deck">Read the records behind the charts, find a specific place, or download a copy to explore yourself.</p>
+    </div>
+    <nav class="resource-nav" aria-label="Choose a dataset">
+      <a href="data.html?dataset=reviews" data-dataset="reviews" aria-current="page">Review sample</a>
+      <a href="data.html?dataset=venues" data-dataset="venues">Official venues</a>
+      <a href="data.html?dataset=areas" data-dataset="areas">Area density</a>
+      <a href="data.html?dataset=grids" data-dataset="grids">500 m grid</a>
+    </nav>
+    <section class="resource-overview" aria-labelledby="dataset-title">
+      <p class="resource-period" id="dataset-period">REVIEW LISTINGS · ACCESSED 6 OCTOBER 2026</p>
+      <h2 id="dataset-title">Selected restaurant reviews</h2>
+      <p id="dataset-description">A non-random sample of 31 Melbourne restaurant listings, with ratings, cumulative review counts, price bands and recorded tags.</p>
+      <p class="resource-caveat" id="dataset-caveat">This is not a city-wide ranking. Listing snapshots may be cached; the access date does not establish the date of the latest review.</p>
+      <p class="resource-source" id="dataset-sources"></p>
+      <div class="resource-downloads" aria-label="Download this dataset">
+        <a class="resource-download-primary" id="csv-download" href="data/downloads/reviews.csv" download>Download CSV ↓</a>
+        <a id="original-download" href="data/processed/reviews.json" download>Download original JSON ↓</a>
+      </div>
+      <p class="resource-small" id="format-note">The preview shows selected fields. CSV downloads include more fields for spreadsheet use. Original JSON is the format used by the website.</p>
+      <details class="resource-format-details">
+        <summary>CSV format details</summary>
+        <p>Files use UTF-8 encoding and comma-separated columns. Multiple tags are separated by semicolons; missing values are blank. Text beginning with characters such as + or @ may have a protective leading apostrophe so spreadsheet software reads it as text. Original JSON and GeoJSON retain the original values.</p>
+      </details>
+    </section>
+    <section class="resource-preview" aria-labelledby="preview-title">
+      <div class="resource-preview-heading">
+        <h2 id="preview-title">Browse the records</h2>
+        <span class="resource-small">25 records per page</span>
+      </div>
+      <form class="resource-search" role="search" id="search-form">
+        <label for="data-search">Search this dataset</label>
+        <div class="resource-search-controls">
+          <input id="data-search" type="search" placeholder="Name, cuisine, price or dietary tag" autocomplete="off" disabled>
+          <button id="clear-search" type="button" disabled>Clear search</button>
+        </div>
+      </form>
+      <p class="resource-status" id="record-status" role="status" aria-live="polite">Loading records…</p>
+      <div class="resource-error" id="data-error" role="alert" hidden>
+        <p id="data-error-message"></p>
+        <button type="button" id="retry-load">Try again</button>
+      </div>
+      <div class="resource-table-wrap" id="preview-table-wrap">
+        <table class="resource-table" id="data-table">
+          <caption id="table-caption">Selected restaurant reviews: selected fields. Empty source values appear as “Not recorded”.</caption>
+          <thead id="data-head"></thead>
+          <tbody id="data-rows"></tbody>
+        </table>
+      </div>
+      <nav class="resource-pagination" aria-label="Data pages">
+        <button id="previous-page" type="button" disabled>← Previous</button>
+        <p id="page-status" aria-live="polite">Page 1 of 1</p>
+        <button id="next-page" type="button" disabled>Next →</button>
+      </nav>
+    </section>
+    <p class="resource-small resource-endnote">“Not recorded” means the value is missing from these source records. It does not mean a service or dietary option is unavailable. <a href="index.html#sources">Read the full sources and limitations.</a></p>
+    <noscript><p class="resource-error">Turn on JavaScript to search and page through the records. The CSV and original-data download links above remain available.</p></noscript>
+  </main>
+  <footer><span>BEYOND THE STARS / DATA</span><a href="index.html#sources">Return to the story ↑</a></footer>
+</body>
+</html>

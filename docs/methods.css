@@ -1,0 +1,14 @@
+.methods-page main{padding:38px 0 50px;max-width:1100px}
+.methods-page h1{font:normal clamp(42px,7vw,76px)/1.05 Georgia,serif;letter-spacing:-2px;margin:12px 0 24px}
+.methods-page h2{font:normal 29px/1.25 Georgia,serif;margin:42px 0 18px;padding-top:20px;border-top:1px solid var(--line);scroll-margin-top:18px}
+.methods-page p,.methods-page li{font-size:15px;line-height:1.85;overflow-wrap:anywhere}
+.methods-page article>p,.methods-page article>ul,.methods-intro{max-width:88ch}
+.methods-intro{font-size:18px!important;color:var(--muted)}
+.methods-contents{display:flex;flex-wrap:wrap;gap:12px 24px;padding:22px 0;border-block:1px solid var(--line);font-size:13px;margin:28px 0}
+.methods-page code{font-size:.88em;background:#eeeee3;padding:2px 4px;overflow-wrap:anywhere}
+.methods-table{max-width:100%;overflow-x:auto;border:1px solid var(--line);padding:10px;margin:24px 0}
+.methods-table table{min-width:760px;font-size:12px}.methods-table th{font-size:12px}
+.methods-table th:first-child{width:18%}.methods-table th:nth-child(2){width:15%}.methods-table th:nth-child(3),.methods-table th:nth-child(4){width:21%}
+.methods-table:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.methods-back{margin-top:38px}.methods-page a{overflow-wrap:anywhere}
+@media(max-width:650px){.methods-page main{padding-top:26px}.methods-page p,.methods-page li{font-size:14px}.methods-page h2{font-size:25px}}

@@ -26,4 +26,14 @@ The desktop and phone checks cover the observed browser, sizes and scenarios, no
 
 ## Current publication status
 
-The author requested local completion first and publication later. GitHub Pages was disabled on 11 October 2026 (DELETE 204; subsequent GET 404). Earlier deployment checks above are historical. The repository source and local deliverables are retained; do not re-enable Pages until the author requests publication.
+GitHub Pages was temporarily disabled on 11 October 2026 at the author's request (DELETE 204; subsequent GET 404). On 12 October 2026, the author confirmed they were using the public site, and the existing public page was observed in the browser. Publication is active again.
+
+## Data access repair — 12 October 2026
+
+The four original download links exposed JSON/GeoJSON directly, and the methods link exposed Markdown. They now open searchable data previews and a readable HTML methods page. Each preview offers an Excel-friendly CSV download and retains the original data format as a separate option.
+
+- CSV exports contain 31 review records, 1,645 venue records, 13 areas and 87 occupied grid cells. The exporter reopens each output and checks every field, including full geometry, against the source records. CSV uses UTF-8 BOM; arrays use semicolons, nulls become empty cells, and formula-like text receives a protective apostrophe. Negative numeric coordinates are unchanged.
+- Browser checks covered all four previews, pagination, a restaurant search, an empty search and clearing the search back to 31 records. A real browser download of `reviews.csv` was reopened and confirmed to contain the expected 31 records.
+- At a 390 px viewport override, the data page uses the mobile card layout. The data page and methods page both had a document scroll width equal to client width (375 px).
+- The HTML methods page preserves all six source sections and all 31 location-crosswalk rows. Local links from the main page, data page and methods page resolve to existing files.
+- Chart specifications, chart interaction code and the JSON/GeoJSON files used by the charts are unchanged by this repair. The narrative and its twelve charts remain on the original single page; the extra pages provide supporting data and methods.
